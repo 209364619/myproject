@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>ElasticSearch</title>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <h3 class="text-center">
+                    ElasticSearch
+                </h3>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <a href={{ head_addr }}>head插件</a>
+
+            <form>
+                <div class="col-md-8 column">
+                    <input type="text" id="keyword" placeholder="请输入查询关键词">
+                </div>
+                <div class="col-md-4 column">
+                    <input type="submit" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+        <p>
+
+        </p>
+    </div>
+{% endblock %}
