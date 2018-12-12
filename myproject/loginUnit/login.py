@@ -17,8 +17,8 @@ def login_check(request):
     else:
         from myproject import properties
         client = MongoClient(properties.MONGO_ADDR, properties.MONGO_PORT)
-        userdb = client['user']
-        users = userdb['users']
+        userdb = client['users']
+        users = userdb['user']
         user = users.find_one()
         if user is None:
             context['info'] = "用户不存在！"
