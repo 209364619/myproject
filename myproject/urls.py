@@ -17,6 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from loginUnit import login
 import pageguide
+from tweets import tweets_controller
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,6 +25,10 @@ urlpatterns = [
     url(r'^login_check$', login.login_check),
     url(r'^logout/$', login.logout, name='logout'),
     url(r'^elasticsearch/$', pageguide.go_to_es, name='es'),
+    url(r'^kube_dashboard/$', pageguide.go_to_dashboard, name='kubeDashboard'),
+    url(r'^grafna/$', pageguide.go_to_grafna, name='grafna'),
+    url(r'^tweets/$', pageguide.go_to_tweets, name='tweets'),
+    url(r'^get_tweets_by_keyword', tweets_controller.get_tweets_by_api, name='get_tweets_by_keyword'),
     url(r'^$', login.navi_helper),
 
 ]

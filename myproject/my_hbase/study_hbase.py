@@ -3,7 +3,6 @@ from thrift import Thrift
 from thrift.transport import TSocket, TTransport
 from thrift.protocol import TBinaryProtocol
 from hbase import Hbase
-
 # server端地址和端口,web是HMaster也就是thriftServer主机名,9090是thriftServer默认端口
 transport = TSocket.TSocket(host='10.10.10.50', port=9090)
 # transport.setTimeout(5000)
@@ -55,14 +54,3 @@ import os
 # client.mutateRow("twitter_images", "17685258.jpg", [mutations])
 # print client.getRow('twitter_images', '25073877.jpg')
 
-def read_mongo_user_id_import_image_to_hbase():
-    from pymongo import MongoClient
-    client = MongoClient(host="10.10.10.50", port=27000)
-    db = client['tw_user_database']
-    collections = db.list_collection_names()
-    for collect_name in collections:
-        collection = db[collect_name]
-        print collection, type(collection)
-
-
-read_mongo_user_id_import_image_to_hbase()

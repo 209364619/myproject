@@ -30,3 +30,6 @@ def my_producer(msg):
     producer = KafkaProducer(bootstrap_servers=IPADDR)
     producer.send('new_test', msg, partition=0)
     producer.close()
+
+
+my_producer("xixi")
