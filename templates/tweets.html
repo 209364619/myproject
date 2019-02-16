@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}
+    <title>推文采集</title>
+{% endblock %}
+{% block body %}
+    <h1>关键词采集</h1>
+    <form action="/get_tweets_by_keyword" method="post">
+        <label>请输入关键词：</label><input type="text" placeholder="关键词" name="keyword">
+        <label>采集数量：</label><input type="text" placeholder="采集数量" name="num">
+        <input type="submit" class="btn btn-primary" value="开始采集">
+    </form>
+{% endblock %}
