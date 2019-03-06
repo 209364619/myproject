@@ -5,7 +5,7 @@ from elasticsearch_dsl.query import MultiMatch
 from myproject import properties
 
 import json
-
+import time
 es_host = properties.ELASTIC_ADDR
 es_port = properties.ELASTIC_PORT
 tweets_index = properties.ELASTIC_TWEETS_INDEX
@@ -13,8 +13,11 @@ tweets_index = properties.ELASTIC_TWEETS_INDEX
 client = Elasticsearch(hosts=[{"host": es_host, "port": es_port}])
 
 
-# 索引 doc_type 记录数添加
 def test1():
+    '''
+    添加测试数据
+    :return:
+    '''
     body1 = {
         "name": "zhangsan",
         "age": 23,
@@ -67,7 +70,11 @@ def single_match():
 
 
 # 多字段全文检索
-def test2():
+def test2_multi_match():
+    '''
+    多个字段检索匹配
+    :return:
+    '''
     s = Search(using=client, index='test-index')
     q = Q('multi_match', query='李四', fields=['favorite', 'sport'])
     s = s.query(q)
@@ -80,7 +87,11 @@ def test2():
 
 
 # 通过query 删除记录，出错，未解决
-def test3():
+def test3_delete():
+    '''
+
+    :return:
+    '''
     s = Search(using=client, index='test-index').query('match', sport='gaming')
     get_dsl(s)
     # print '检索匹配记录：'
@@ -96,11 +107,26 @@ def test3():
         get_readable_rs(hit.to_dict())
 
 
-def test4():
-    pass
+def test4_sort(s, keyword, method):
+    '''
+    排序，默认为desc，通过order改变排序条件
+    :param keyword:
+    :param method:'desc' 'asc'
+    :return:
+    '''
+    s = s.query('match', text=keyword)
+    s = s.sort({"created_at_ts": {'order': method}})
+    responxe = s.execute()
+    for hit in responxe:
+        created = hit.to_dict()['created_at_ts']
+        print created
 
 
-def test5():
+def test5_sort():
+    '''
+    检索结果分页显示
+    :return:
+    '''
     s = Search(using=client, index='test-index')
 
     # s[from:end] 选取end - from 条
@@ -112,15 +138,55 @@ def test5():
         get_readable_rs(hit.to_dict())
 
 
-def test6():
+def test6_highlight():
+    '''
+    高亮显示
+    :return:
+    '''
     s = Search(using=client, index='test-index')
-
     s = s.query('match', sport='足球')
-    s = s.highlight('sport')
+    s = s.highlight('sport')  # 高亮字段
     response = s.execute()
     for hit in response:
-        from elasticsearch_dsl.utils import AttrList
-        rs = hit.meta.highlight.sport
+        for h_result in hit.meta.highlight.sport:  # 获得高亮结果
+            print h_result
 
+
+def replace_highlight(sentence):
+    '''
+    高亮<em></em>使用指定标签替换
+    :param sentence:
+    :return:
+    '''
+    a = sentence.replace("<em>", "<font color=\"#FF0000\">")
+    b = a.replace("</em>", "</font>")
+    return b
+
+
+def test_body_search():
+    client = Elasticsearch([{"host": "192.168.8.200", "port": 9201}])
+    body = {
+        "query": {
+            "match_all": {}
+        }
+    }
+    start_time = time.time()
+    rs = client.search(index="tweets_database_2019_02", body=body)
+    end_time = time.time()
+    get_readable_rs(rs)
+    print type(rs)
+    print 'total', rs['hits']['total']
+    print end_time - start_time
+
+    # 使用dsl检索
+    s = Search(using=client, index="tweets_database_2019_02")
+    response = s.execute()
+    for hit in response:
+        print hit.to_dict()
 
 if __name__ == '__main__':
+    # 200主机
+    # client = Elasticsearch([{"host":"192.168.8.200","port":9201}])
+    # s = Search(using=client, index="tweets_database_2019*")
+    # test4_sort(s,'美国', 'desc')
+    test_body_search()

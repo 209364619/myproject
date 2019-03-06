@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 Django settings for myproject project.
 
@@ -24,7 +25,7 @@ SECRET_KEY = 'eq4hfhxd2h26mww-+ajtjhnsa+du=1fm+*9oxeds&+8pq9q8ng'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -35,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'dwebsocket',
 ]
 
 MIDDLEWARE = [
@@ -45,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'my_dwebsocket.middleware.WebSocketMiddleware'  # 为所有的URL提供websocket，如果只是单独的视图需要可以不选
 ]
 
 ROOT_URLCONF = 'myproject.urls'
@@ -125,3 +128,4 @@ STATICFILES_DIRS = (
 MONGO_ADDR = "192.168.209.110"
 MONGO_PORT = 27017
 
+WEBSOCKET_ACCEPT_ALL = True  # 可以允许每一个单独的视图实用websockets

@@ -24,6 +24,7 @@ class Tweets:
             result['status'] = 'success'
         except:
             result['status'] = 'false'
+            result['tweets'] = r
         return result
 
     def store_tweets_into_mongo(self, result):

@@ -2,7 +2,7 @@
 from study_tweets_api import Tweets
 from django.shortcuts import render
 from django.http import HttpResponse
-import json
+from django.http import JsonResponse
 
 
 def get_tweets_by_api(request):
@@ -23,10 +23,10 @@ def get_tweets_by_api(request):
         rs = op.get_tweet_by_key_word(keyword=keyword, num=num)
         if rs['status'] == 'success':
             result['status'] = 'success'
+
         else:
             result['status'] = 'false'
             result['msg'] = '采集失败'
     else:
         result['msg'] = '未输入关键词'
-    # return render(request, 'tweets.html', result)
-    return HttpResponse(json.dumps(result), content_type="application/json")
+    return JsonResponse(result)

@@ -1,8 +1,11 @@
 # coding=utf-8
 from django.shortcuts import render
 from pymongo import MongoClient
+from myproject.my_encrypt.generator_key_crypto import rsa_helper
 
 
+# from Crypto.PublicKey import RSA
+# from Crypto.Cipher import PKCS1_v1_5
 def login(request):
     return render(request, "index.html")
 
@@ -11,7 +14,6 @@ def login_check(request):
     context = {}
     username = request.POST.get('username')
     password = request.POST.get('password')
-    print username, password
     if username is None:
         context['info'] = '用户名不能为空！'
     else:
@@ -23,6 +25,12 @@ def login_check(request):
         if user is None:
             context['info'] = "用户不存在！"
         else:
+            # rsa私钥解密
+            with open('F:\python workspace\myproject\myproject\loginUnit\private_key.pem', 'rb') as private_buff:
+                private_key = private_buff.read()
+                password = use_decrypt(password, private_key)
+
+            # 密码匹配
             if user['password'] == password:
                 request.session['username'] = username
                 context['info'] = 'success!'
