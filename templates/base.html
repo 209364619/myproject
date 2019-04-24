@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <script src="/static/js/jquery-2.1.4.min.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
     {% block title %}
 
     {% endblock %}
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="/static/css/bootstrap.css">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -31,12 +33,13 @@
                 <li><a href={% url 'kubeDashboard' %}>Kubernetes</a></li>
                 <li><a href={% url 'grafna' %}>monitor</a></li>
                 <li><a href={% url 'tweets' %}>tweets api</a></li>
+                <li><a href={% url 'encrypt' %}>safe</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">文件系统 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Fastdfs</a></li>
-                        <li><a href="#">Hdfs</a></li>
+                        <li><a href={% url 'fastdfs' %}>Fastdfs</a></li>
+                        <li><a href={% url 'hdfs' %}>Hdfs</a></li>
                         <li><a href="#">Hbase</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#">Separated link</a></li>
@@ -72,7 +75,5 @@
 {% block body %}
 
 {% endblock %}
-<script src="/static/js/jquery-2.1.4.min.js"></script>
-<script src="/static/js/bootstrap.js"></script>
 </body>
 </html>

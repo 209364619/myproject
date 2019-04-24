@@ -4,7 +4,7 @@ from pymongo import MongoClient
 # 将推文按照日期存储到数据库
 month_list = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 # 数据库建立连接
-client = MongoClient(host="10.10.10.50", port=27000)
+client = MongoClient(host="192.168.8.200", port=27000)
 db = client['test']
 collection = db['tweets']
 target_db = client['tweets_database_test']

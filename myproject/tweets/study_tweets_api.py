@@ -9,10 +9,10 @@ from tweets_api import api_list
 
 
 class Tweets:
-    consumer_key = api_list[1]["consumer_key"]
-    consumer_secret = api_list[1]["consumer_secret"]
-    access_token_key = api_list[1]["access_token"]
-    access_token_secret = api_list[1]["access_token_secret"]
+    consumer_key = api_list[2]["consumer_key"]
+    consumer_secret = api_list[2]["consumer_secret"]
+    access_token_key = api_list[2]["access_token"]
+    access_token_secret = api_list[2]["access_token_secret"]
 
     api = TwitterAPI(consumer_key, consumer_secret, access_token_key, access_token_secret)
 
@@ -24,7 +24,6 @@ class Tweets:
             result['status'] = 'success'
         except:
             result['status'] = 'false'
-            result['tweets'] = r
         return result
 
     def store_tweets_into_mongo(self, result):
@@ -35,8 +34,9 @@ class Tweets:
         collection = db[collection_name]
         # 记录逐条存入数据库,如果推文id存在则不再重复插入
         for item in result.get_iterator():
-            collection.insert_one(item)
-
+            # collection.insert_one(item)
+            # 记录存在则使用更新
+            collection.replace_one({"id": item.get('id')}, item, upsert=True)
     def get_Mongo_client(self):
         from pymongo import MongoClient
         from myproject import properties
@@ -47,4 +47,4 @@ class Tweets:
 
 if __name__ == '__main__':
     test = Tweets()
-    test.get_tweet_by_key_word("banana", 6)
+    print test.get_tweet_by_key_word("ipad", 12)

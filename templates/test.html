@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>密码测试</title>
+</head>
+<body>
+<h1>MD5</h1>
+<input id=test placeholder="待加密文本">
+<input type=button value=md5 onClick="alert(hex_md5(test.value))">
+<hr>
+
+<h1>AES对称加密</h1>
+<input id="aes_input" placeholder="待加密文本">
+<button onclick="aes_encrypt()">AES</button>
+<div><p id="aes_encrypt_text"></p></div>
+
+<input id="aes_decrypt_input" placeholder="待解密文本">
+<button onclick="aes_decrypt()">AES解密</button>
+<div id="aes_decrypt_text"></div>
+<hr>
+
+<h1>RSA非对称加密</h1>
+<input type="text" id="password" placeholder="请输入待加密文本">
+<button onclick="rsa_encrypt()">rsa加密</button>
+<br>
+<div>
+    <textarea id="ras_encrypt" style="width: 167px;margin-top: 20px;height: 70px;"></textarea>
+    <button onclick="rsa_decrypt()">rsa解密</button>
+</div>
+
+<hr>
+<script src="../static/js/jsencrypt.js"></script>
+<script src="../static/js/jquery-2.1.4.min.js"></script>
+<script src="../static/js/aes.js"></script>
+<script src="../static/js/encrypt.js"></script>
+</body>
+</html>

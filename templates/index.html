@@ -49,19 +49,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </div>
     <div class="right-grid-w3ls text-center">
         <h3>login here</h3>
-        <form action="login_check" method="post">
+        <form method="post">
             <div class="img-grid1">
                 <img src="/static/images/2.png" alt=" " class="img-responsive"/>
             </div>
             <div class="w3ls-icon">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
-                <input type="text" class="user" name="username" placeholder="username" required=""/>
+                <input type="text" class="user" name="username" id="username" placeholder="username" required=""/>
             </div>
             <div class="w3ls-icon">
                 <i class="fa fa-lock" aria-hidden="true"></i>
-                <input type="password" class="lock" name="password" placeholder="Password" required=""/>
+                <input type="password" class="lock" name="password" id="password" placeholder="Password" required=""/>
             </div>
-            <input type="submit" value="login">
+            <input type="button" value="login" onclick="login()"/>
         </form>
 
     </div>
@@ -72,6 +72,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     </p>
 </div>
 <script src="/static/js/jquery-2.1.4.min.js"></script>
+<script src="../static/js/jsencrypt.js"></script>
 <script>
     $(document).ready(function (c) {
         $('.alert-close').on('click', function (c) {
@@ -80,6 +81,37 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             });
         });
     });
+
+    /*
+    登录密码通过rsa进行加密后，传输到台处理
+     */
+    function login() {
+        var username = $('#username').val();
+        var password = $("#password").val();
+        console.log(password)
+        var PUBLIC_KEY = "-----BEGIN PUBLIC KEY-----\n" +
+            "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDiRK/s+kYoIVo+S36lnyjtmZ2V\n" +
+            "A3XKOGr2fNJDwo8P8mwE6YFYLhe8QIqGtj5kaxHXLzbEK8vUvI1yQphBAdEwtZ7y\n" +
+            "vl9VGcMH+VvnuBtyrpsPg+ncCqbYoF1Spe2+6nMSvDiWd+7zQSm5g7YYPIefwKq1\n" +
+            "fJ70HGIMU2++IliAxwIDAQAB\n" +
+            "-----END PUBLIC KEY----- "
+        //rsa加密
+        var encrypt = new JSEncrypt();
+        encrypt.setPublicKey(PUBLIC_KEY);
+        password = encrypt.encrypt(password);
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "/login_check/",
+            data: {
+                "username": username,
+                "password": password,
+            },
+            success: function (data) {
+                console.log(data['info'])
+            }
+        });
+    }
 </script>
 <script>
 

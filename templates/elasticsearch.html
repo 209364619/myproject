@@ -17,18 +17,43 @@
                 <a href={{ head_addr }}>head插件</a>
             </div>
             <h3 style="color:blue"><span>推文关键词查询</span></h3>
-            <form>
                 <div class="col-md-8 column">
                     <input type="text" id="keyword" placeholder="请输入查询关键词">
+                    <input type="text" id="size" placeholder="页记录数" value="10">
+                    <input type="text" id="pageNum" placeholder="页码" value="1">
                 </div>
                 <div class="col-md-4 column">
-                    <input type="submit" class="btn btn-primary">
+                    <input type="submit" class="btn btn-primary" onclick="search_by_keyword()">
                 </div>
-            </form>
-            <table></table>
         </div>
-        <p>
-
-        </p>
+        <table class="table table-striped">
+            <tbody id="result"></tbody>
+        </table>
     </div>
+    <script>
+        function search_by_keyword() {
+            keyword = $('#keyword').val()
+            size = $('#size').val()
+            pageNum = $('#pageNum').val()
+            $.ajax({
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: '/search_by_keyword',
+                data: {
+                    "keyword": keyword,
+                    "size": size,
+                    "pageNum": pageNum,
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#result").html("")
+                    for (var i = 0; i < data.text.length; i++) {
+                        text = "<tr><td>" + (i + 1) + '.' + data.text[i] + "</td></tr>"
+                        $("#result").append(text)
+                    }
+
+                },
+            });
+        }
+    </script>
 {% endblock %}

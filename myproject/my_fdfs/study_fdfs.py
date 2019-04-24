@@ -1,7 +1,12 @@
 from fdfs_client.client import *
 
-client = Fdfs_client('F:\\python workspace\\myproject\\myproject\\my_fdfs\\client.conf')
-print client
-ret = client.upload_by_filename('F:\\python workspace\\myproject\\myproject\\my_fdfs\\client.conf')
 
-print ret
+def upload_by_buffer():
+    client = Fdfs_client('.\\client.conf')
+    print client
+    # storages = client.get_storage()
+    # print type(storages), storages\
+
+
+if __name__ == '__main__':
+    upload_by_buffer()

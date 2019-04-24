@@ -11,13 +11,12 @@ def get_tweets_by_api(request):
     if request.method == 'POST':
         keyword = request.POST.get('keyword')
         num = request.POST['num']
-        print keyword, num
     result = {}
     # 通过关键词采集推文
     op = Tweets()
     # 采集数量默认为1
     if num is None:
-        num = 1
+        num = 5
 
     if keyword:
         rs = op.get_tweet_by_key_word(keyword=keyword, num=num)

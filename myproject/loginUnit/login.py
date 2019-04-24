@@ -26,10 +26,10 @@ def login_check(request):
             context['info'] = "用户不存在！"
         else:
             # rsa私钥解密
-            with open('F:\python workspace\myproject\myproject\loginUnit\private_key.pem', 'rb') as private_buff:
+            with open('private_key.pem', 'rb') as private_buff:
                 private_key = private_buff.read()
-                password = use_decrypt(password, private_key)
-
+                rsa_operator = rsa_helper()
+                password = rsa_operator.use_decrypt(password, private_key)
             # 密码匹配
             if user['password'] == password:
                 request.session['username'] = username

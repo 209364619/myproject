@@ -63,8 +63,14 @@ def list_and_str():
     str_to_list = list_to_str.split()
     print type(str_to_list)
     # 暂未解决直接print中文list在console中输出ascii。
-    # 使用迭代输出即可查看中文
+    # 使用迭代输出即可查看中文,python3中将不会存在这个问题
     for item in str_to_list:
         print item
 if __name__ == '__main__':
-    list_and_str()
+    mylist = []
+    mylist.append('啦啦啦')
+    print(mylist)
+    mylist.append('啦啦啦')
+    print(mylist)
+    for item in mylist:
+        print item

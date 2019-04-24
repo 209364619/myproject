@@ -105,4 +105,6 @@ def console_list_unicode():
 
 
 if __name__ == '__main__':
-    console_list_unicode()
+    a = '\xc3\x8f\xc3\xa6\xc2\xbd\xc2\xad \xc2\xa1\xc2\xa1'
+    b = a.decode('gbk')
+    print b

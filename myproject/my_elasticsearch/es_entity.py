@@ -2,10 +2,11 @@
 
 from elasticsearch_dsl import Search
 from elasticsearch import Elasticsearch
+from myproject.properties import *
 from django.http import JsonResponse
 
-ELASTIC_ADDR = "192.168.8.200"
-ELASTIC_PORT = 9201
+ELASTIC_ADDR = ELASTIC_ADDR
+ELASTIC_PORT = ELASTIC_PORT
 
 
 class EsHelper:

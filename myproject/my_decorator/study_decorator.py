@@ -93,9 +93,8 @@ def client_ip(func):
 
 def log_file_name():
     format_time_str = time.strftime('%Y_%m_%d', time.localtime(time.time()))
-
-    log_dir = base_dir + format_time_str + ".log"
-    return
+    log_dir = format_time_str + ".log"
+    return log_dir
 
 
 def login_ip(request):
